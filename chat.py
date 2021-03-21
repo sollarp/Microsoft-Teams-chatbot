@@ -1,6 +1,6 @@
 import random
 import json
-
+import pymsteams
 import torch
 
 from model import NeuralNet
@@ -28,9 +28,19 @@ model.eval()
 bot_name = "Sam"
 print("Let's chat! (type 'quit' to exit)")
 while True:
-    # sentence = "do you use credit cards?"
     sentence = input("You: ")
-    if sentence == "quit":
+    if "send message" in sentence:
+        text_message = input("type your message: ")
+        # You must create the connectorcard object with the Microsoft Webhook URL
+        myTeamsMessage = pymsteams.connectorcard("<Microsoft Webhook URL>")
+
+        # Add text to the message.
+        myTeamsMessage.text("this is my text")
+
+        # send the message.
+        myTeamsMessage.send()
+
+    if "quit" in sentence:
         break
 
     sentence = tokenize(sentence)
